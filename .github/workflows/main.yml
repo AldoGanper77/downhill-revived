@@ -45,16 +45,16 @@ jobs:
         run: |
           cd port/android
           sed -i '/add_argument/!s/--offline//g' build_apk.py || true
-          sed -i '/add_argument/!s/--offline//g' ../tools/build_host64.py || true
-          sed -i 's/args.offline/False/g' build_apk.py ../tools/build_host64.py || true
-          sed -i 's/\.offline/False/g' build_apk.py ../tools/build_host64.py || true
+          sed -i '/add_argument/!s/--offline//g' ../../tools/build_host64.py || true
+          sed -i 's/args.offline/False/g' build_apk.py ../../tools/build_host64.py || true
+          sed -i 's/\.offline/False/g' build_apk.py ../../tools/build_host64.py || true
           CARGO_BIN=$(which cargo)
           mkdir -p /tmp/wrap
           printf '#!/bin/bash\nA=(); for X in "$@"; do if [ "$X" != "--offline" ]; then A+=("$X"); fi; done\nexec '"$CARGO_BIN"' "${A[@]}"\n' > /tmp/wrap/cargo
           chmod +x /tmp/wrap/cargo
           export CARGO=/tmp/wrap/cargo
           export CARGO_NET_OFFLINE=false
-          sed -i 's/default=True/default=False/g' | ../tools/build_apk.py ../tools/build_host64.py || true
+          sed -i 's/default=True/default=False/g' | ../../tools/build_apk.py || true
           export PATH="/tmp/wrap:$PATH"
           export CC_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang"
           export CXX_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++"
