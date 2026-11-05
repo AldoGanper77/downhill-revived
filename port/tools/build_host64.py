@@ -87,9 +87,10 @@ TARGETS = {t.key: t for t in (
            wabt='/opt/homebrew/opt/wabt', simde=Path.home() / 'DevCaches/simde-src'),
     # -march=armv8.2-a: the Snapdragon 888's cores and every arm64 phone since 2018; tuned for its
     # Cortex-X1 and A78s (finding 091)
-    Target('android-arm64', 'aarch64-linux-android', 'build/android', 'libmain.so', 'arm64', jobs=2, outputs=8,
-           flags=['--target=aarch64-linux-android%d' % ANDROID_API, '-march=armv8.2-a', '-mtune=cortex-a78',
-                  '-fPIC', '-fomit-frame-pointer']),
+        Target('android-arm', 'armv7-linux-androideabi',
+           flags=['--target=armv7-linux-androideabi', '-fPIC'],
+           wabt='wasm2c'),
+    
 )}
 # Off Windows: the POSIX host instead of the Win32 one
 POSIX_UNITS = {'port/host/host_win32.c': 'port/host/host_posix.c'}
