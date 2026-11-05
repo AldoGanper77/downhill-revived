@@ -26,9 +26,10 @@ jobs:
 
       - name: Build APK
         env:
-          GRADLE_USER_HOME: ${{ github.workspace }}/gradle-home
-          ANDROID_HOME: ${{ env.ANDROID_HOME }}
-          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
+         GRADLE_USER_HOME: /home/runner/.gradle
+         ANDROID_USER_HOME: /home/runner/.android
+         ANDROID_HOME: /usr/local/lib/android/sdk
+         ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
         run: |
           cd port/android
           python3 build_apk.py
