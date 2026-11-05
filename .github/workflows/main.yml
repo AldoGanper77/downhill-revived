@@ -50,6 +50,9 @@ jobs:
           export CARGO_NET_OFFLINE=false
           sed -i 's/default=True/default=False/g' build_apk.py build_host64.py || true
           export PATH="/tmp/wrap:$PATH"
+          export CC_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang"
+          export CXX_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++"
+          export TARGET_CC="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang"
           python3 build_apk.py
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
