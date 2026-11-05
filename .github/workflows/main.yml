@@ -22,11 +22,9 @@ jobs:
           if [ -z "$NDK" ] || [ ! -d "$NDK" ]; then NDK=$(ls -d /usr/local/lib/android/sdk/ndk/* | head -n 1); fi
           echo "NDK=$NDK"
           ln -sfn $NDK/toolchains/llvm/prebuilt/linux-x86_64 $NDK/toolchains/llvm/prebuilt/windows-x86_64
-          ls $NDK/toolchains/llvm/prebuilt/windows-x86_64/bin/clang*
           cd $NDK/toolchains/llvm/prebuilt/windows-x86_64/bin
-          ln -sf clang clang.exe
-          ln -sf clang++ clang++.exe
-          ls -l clang.exe
+          for f in *; do [ -f "$f" ] && [ "${f%.exe}" = "$f" ] && ln -sf "$f" "$f.exe"; done
+          ls -l *.exe | head -n 20
       
           
           
