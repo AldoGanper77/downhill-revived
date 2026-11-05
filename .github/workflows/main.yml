@@ -54,7 +54,7 @@ jobs:
           chmod +x /tmp/wrap/cargo
           export CARGO=/tmp/wrap/cargo
           export CARGO_NET_OFFLINE=false
-          sed -i 's/default=True/default=False/g' | ../tools/build_apk.py ../tools/build_host64.py | || || true
+          sed -i 's/default=True/default=False/g' | ../tools/build_apk.py ../tools/build_host64.py || true
           export PATH="/tmp/wrap:$PATH"
           export CC_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang"
           export CXX_aarch64_linux_android="$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/linux-x86_64/bin/aarch64-linux-android33-clang++"
