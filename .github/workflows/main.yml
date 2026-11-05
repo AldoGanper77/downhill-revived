@@ -19,25 +19,17 @@ jobs:
 
       - name: Fix NDK clang path
         run: |
-          NDK_VERSION=27.3.13750724
-          NDK_ROOT=/usr/local/lib/android/sdk/ndk/$NDK_VERSION
-          echo "NDK_ROOT=$NDK_ROOT"
-          ls $NDK_ROOT/toolchains/llvm/prebuilt/
-          
-          # Bikin folder palsu Windows
-          mkdir -p $NDK_ROOT/toolchains/llvm/prebuilt/windows-x86_64/bin
-          
-          # Bikin jalan pintas semua file linux -> .exe windows
-          for f in $NDK_ROOT/toolchains/llvm/prebuilt/linux-x86_64/bin/*; do
-            base=$(basename "$f")
-            ln -sf "$f" "$NDK_ROOT/toolchains/llvm/prebuilt/windows-x86_64/bin/$base.exe"
-            ln -sf "$f" "$NDK_ROOT/toolchains/llvm/prebuilt/windows-x86_64/bin/$base"
+          NDK=/usr/local/lib/android/sdk/ndk/27.3.13750724
+          BIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
+          ls $BIN | head -n 20
+          for f in clang clang++ clang-cl ld.lld llvm-ar llvm-ranlib; do
+            if [ -f "$BIN/$f" ] && [ ! -f "$BIN/$f.exe" ]; then cp "$BIN/$f" "$BIN/$f.exe"; fi
           done
+          ls $BIN/clang*
           
-          ls $NDK_ROOT/toolchains/llvm/prebuilt/windows-x86_64/bin/ | head -20
           
-          # Kalau script-nya masih ngeyel, paksa ganti tulisannya
-          find . -name "build_host64.py" -exec sed -i 's/windows-x86_64/linux-x86_64/g' {} \;
+          
+          
 
       - name: Build APK
         run: |
