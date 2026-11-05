@@ -32,6 +32,17 @@ jobs:
           
       - name: Install ninja
         run: pip install ninja
+      - name: Install wabt
+        run: |
+          mkdir -p /home/runner/DevCaches/wabt
+          cd /home/runner/DevCaches/wabt
+          if [ ! -f wabt-1.0.42/bin/wasm2c ]; then
+            curl -L https://github.com/WebAssembly/wabt/releases/download/1.0.42/wabt-1.0.42-ubuntu-20.04.tar.gz -o wabt.tar.gz
+            tar xzf wabt.tar.gz
+            mv wabt-1.0.42-ubuntu-20.04 wabt-1.0.42
+          fi
+          chmod +x wabt-1.0.42/bin/wasm2c
+          ls -l wabt-1.0.42/bin/wasm2c
       - name: Build APK
         run: |
           cd port/android
