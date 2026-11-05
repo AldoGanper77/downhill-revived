@@ -1,6 +1,6 @@
 name: Build Android 32-bit
 
-on:
+"on":
   workflow_dispatch:
 
 jobs:
@@ -16,19 +16,19 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK + NDK
-       uses: android-actions/setup-android@v3
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
 
       - name: Check build script
         run: |
           ls -R port/android
-          cat port/android/build_apk.py | head -n 200
+          cat port/android/build_apk.py
 
       - name: Build APK
         run: |
           cd port/android
-          python3 build_apk.py --help || true
-          python3 build_apk.py || python3 build_apk.py --abi armeabi-v7a || true
+          python3 build_apk.py --help
+          python3 build_apk.py || python3 build_apk.py --help
           find . -name "*.apk" -type f
 
       - name: Upload APK
