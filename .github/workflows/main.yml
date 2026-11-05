@@ -40,6 +40,8 @@ jobs:
           cd port/android
           sed -i '/add_argument/!s/--offline//g' build_apk.py || true
           sed -i '/add_argument/!s/--offline//g' build_host64.py || true
+          sed -i 's/args.offline/False/g' build_apk.py build_host64.py || true
+          sed -i 's/\.offline/False/g' build_apk.py build_host64.py || true
           python3 build_apk.py
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
