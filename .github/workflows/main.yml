@@ -38,6 +38,8 @@ jobs:
       - name: Build APK
         run: |
           cd port/android
+          sed -i 's/--offline//g' build_apk.py || true
+          sed -i 's/--offline//g' build_host64.py || true
           python3 build_apk.py
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
