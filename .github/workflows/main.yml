@@ -1,0 +1,39 @@
+name: Build Android 32-bit
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: Set up Android SDK + NDK
+        uses: android-actions/setup-android@v3
+
+      - name: Check build script
+        run: |
+          ls -R port/android
+          cat port/android/build_apk.py | head -n 200
+
+      - name: Build APK
+        run: |
+          cd port/android
+          python3 build_apk.py --help || true
+          python3 build_apk.py || python3 build_apk.py --abi armeabi-v7a || true
+          find . -name "*.apk" -type f
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: downhill-32bit
+          path: "**/*.apk"
+          if-no-files-found: warn
