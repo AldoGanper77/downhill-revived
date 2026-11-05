@@ -36,7 +36,7 @@ jobs:
       - name: Install ninja
         run: pip install ninja
       - name: Build APK
-        run: 
+        run: |
           cd port/android
           python3 build_apk.py
         env:
