@@ -87,9 +87,15 @@ TARGETS = {t.key: t for t in (
            wabt='/opt/homebrew/opt/wabt', simde=Path.home() / 'DevCaches/simde-src'),
     # -march=armv8.2-a: the Snapdragon 888's cores and every arm64 phone since 2018; tuned for its
     # Cortex-X1 and A78s (finding 091)
-        Target('android-arm', 'armv7-linux-androideabi',
-           flags=['--target=armv7-linux-androideabi', '-fPIC'],
-           wabt='wasm2c'),
+                    Target('android-arm',
+               'armv7-linux-androideabi',
+               'build/android-arm',
+               'dhd32',
+               'fiber_arm64.c',
+               flags=['--target=armv7-linux-androideabi', '-fPIC'],
+               wabt='wasm2c'),
+    
+    
     
 )}
 # Off Windows: the POSIX host instead of the Win32 one
