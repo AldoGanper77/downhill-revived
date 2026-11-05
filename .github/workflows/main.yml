@@ -25,10 +25,13 @@ jobs:
           cat port/android/build_apk.py
 
       - name: Build APK
+        env:
+          GRADLE_USER_HOME: ${{ github.workspace }}/gradle-home
+          ANDROID_HOME: ${{ env.ANDROID_HOME }}
+          ANDROID_SDK_ROOT: ${{ env.ANDROID_SDK_ROOT }}
         run: |
           cd port/android
-          python3 build_apk.py --help
-          python3 build_apk.py || python3 build_apk.py --help
+          python3 build_apk.py
           find . -name "*.apk" -type f
 
       - name: Upload APK
