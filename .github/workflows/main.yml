@@ -42,6 +42,11 @@ jobs:
           sed -i '/add_argument/!s/--offline//g' build_host64.py || true
           sed -i 's/args.offline/False/g' build_apk.py build_host64.py || true
           sed -i 's/\.offline/False/g' build_apk.py build_host64.py || true
+          CARGO_BIN=$(which cargo)
+          mkdir -p /tmp/wrap
+          printf '#!/bin/bash\nA=(); for X in "$@"; do if [ "$X" != "--offline" ]; then A+=("$X"); fi; done\nexec '"$CARGO_BIN"' "${A[@]}"\n' > /tmp/wrap/cargo
+          chmod +x /tmp/wrap/cargo
+          export PATH="/tmp/wrap:$PATH"
           python3 build_apk.py
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
