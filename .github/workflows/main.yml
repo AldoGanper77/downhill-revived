@@ -41,9 +41,8 @@ jobs:
 
       - name: Build APK
         run: |
-          chmod +x ./build_apk 2>/dev/null || true
-          chmod +x ./build*.py 2>/dev/null || true
-          ./build_apk --target android-arm64 || python3 build_apk.py --target android-arm64 || python3 build_host64.py --target android-arm64
+          cd port/android
+          python3 build_apk.py
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
           ANDROID_NDK_ROOT: /usr/local/lib/android/sdk/ndk/27.3.13750724
