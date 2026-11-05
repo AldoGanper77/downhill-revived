@@ -46,7 +46,10 @@ jobs:
         env:
           ANDROID_NDK_HOME: /usr/local/lib/android/sdk/ndk/27.3.13750724
           ANDROID_NDK_ROOT: /usr/local/lib/android/sdk/ndk/27.3.13750724
-
+          GRADLE_USER_HOME: /home/runner/.gradle
+          ANDROID_HOME: /usr/local/lib/android/sdk
+          ANDROID_SDK_ROOT: /usr/local/lib/android/sdk
+    
       - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
