@@ -20,12 +20,15 @@ jobs:
       - name: Fix NDK clang path
         run: |
           NDK=/usr/local/lib/android/sdk/ndk/27.3.13750724
-          BIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
-          ls $BIN | head -n 20
+          LINUX_BIN=$NDK/toolchains/llvm/prebuilt/linux-x86_64/bin
+          WIN_BIN=$NDK/toolchains/llvm/prebuilt/windows-x86_64/bin
+          mkdir -p $WIN_BIN
           for f in clang clang++ clang-cl ld.lld llvm-ar llvm-ranlib; do
-            if [ -f "$BIN/$f" ] && [ ! -f "$BIN/$f.exe" ]; then cp "$BIN/$f" "$BIN/$f.exe"; fi
+            if [ -f "$LINUX_BIN/$f" ]; then cp "$LINUX_BIN/$f" "$WIN_BIN/$f.exe"; fi
+            if [ -f "$LINUX_BIN/$f" ] && [ ! -f "$LINUX_BIN/$f.exe" ]; then cp "$LINUX_BIN/$f" "$LINUX_BIN/$f.exe"; fi
           done
-          ls $BIN/clang*
+          ls $WIN_BIN/clang*
+          ls $LINUX_BIN/clang*
           
           
           
