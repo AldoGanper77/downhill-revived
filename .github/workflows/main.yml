@@ -46,6 +46,9 @@ jobs:
           mkdir -p /tmp/wrap
           printf '#!/bin/bash\nA=(); for X in "$@"; do if [ "$X" != "--offline" ]; then A+=("$X"); fi; done\nexec '"$CARGO_BIN"' "${A[@]}"\n' > /tmp/wrap/cargo
           chmod +x /tmp/wrap/cargo
+          export CARGO=/tmp/wrap/cargo
+          export CARGO_NET_OFFLINE=false
+          sed -i 's/default=True/default=False/g' build_apk.py build_host64.py || true
           export PATH="/tmp/wrap:$PATH"
           python3 build_apk.py
         env:
