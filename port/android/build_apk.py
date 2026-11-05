@@ -4,13 +4,13 @@
     python port/android/build_apk.py --release [--wasm ...]   # signed with the release key (below)
     python port/android/build_apk.py --check APK                # only check_release on a built APK
 
-1. The native libraries: build/android/lib/arm64-v8a/libmain.so and libSDL3.so, built by
-   port/tools/build_host64.py --target android-arm64 from the module (--wasm, default build/wasm/dhd_core.wasm,
+1. The native libraries: build/android/lib/armeabi-v7a/libmain.so and libSDL3.so, built by
+   port/tools/build_host64.py --target android-arm from the module (--wasm, default build/wasm/dhd_core.wasm,
    when given or when the libraries are missing).
 2. The Gradle project in build/android/project: this folder's files (the Gradle scripts, the
    manifest, DhdActivity.java, the strings and theme), SDL's Java sources of the same release
    (org.libsdl.app, from the SDL source sdl3.py unpacked), the icon (port/res/icon.png, scaled per
-   density), the two libraries (src/main/jniLibs/arm64-v8a) and the Gradle wrapper (SDL's
+   density), the two libraries (src/main/jniLibs/armeabi-v7a) and the Gradle wrapper (SDL's
    gradle-wrapper.jar, Gradle WRAPPER_GRADLE: the version already in GRADLE_USER_HOME).
 3. gradlew assembleDebug (no daemon), signed with the debug key ANDROID_USER_HOME holds
    (DHD_DEVCACHES\\AndroidUser\\debug.keystore, made on first use). Output:
@@ -21,7 +21,7 @@
    DHD_ANDROID_KEY_PASS (app/build.gradle reads them; nothing is written down here). The key is kept
    by the maintainer; an APK signed with another key can't update an installed one. Then the APK is
    checked (check_release: apksigner verify with one signer, the release certificate
-   RELEASE_CERT_SHA256; aapt's badging: not debuggable, the version, arm64-v8a only) and written as build/android/DownhillRevived-<version>-android-experimental.apk, the name
+   RELEASE_CERT_SHA256; aapt's badging: not debuggable, the version, armeabi-v7a only) and written as build/android/DownhillRevived-<version>-android-experimental.apk, the name
    of the release asset (port/tools/package_release.py --platform android).
 
 The release certificate is pinned: an APK signed with any other key (a new keystore made by
